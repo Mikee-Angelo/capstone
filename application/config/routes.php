@@ -53,4 +53,4 @@ $route['default_controller'] = 'auth';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
 
-$route['api/v1/login'] = 'Auth/index';
+$route['api/v1/login/student'] = 'Auth/student';
