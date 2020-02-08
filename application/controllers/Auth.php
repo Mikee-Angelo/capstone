@@ -11,7 +11,7 @@ class Auth extends RestController {
         parent::__construct();
     }
 
-    public function index_post(){
+    public function student_post(){
         /**
          * SANITIZING INPUT OF POST DATA FOR XSS ATTACK
          */
