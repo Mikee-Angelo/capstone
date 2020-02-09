@@ -7,7 +7,7 @@ $config = [
             'label' => 'ID Number',
             'rules' => 'required'
         ],
-        'password' => [
+        'pwd' => [
             'field' => 'pwd', 
             'label' => 'Password',
             'rules' => 'required|min_length[8]'
