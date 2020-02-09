@@ -61,7 +61,8 @@ $autoload['packages'] = array();
 $autoload['libraries'] = array(
     'form_validation',
     'sanitizer',
-    'token'
+    'token',
+    'database'
 );
 
 /*
