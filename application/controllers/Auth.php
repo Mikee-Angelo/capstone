@@ -34,7 +34,7 @@ class Auth extends RestController {
              * USERNAME - usr
              * PASSWORD - pwd
              */
-            $user = $this->post('usr');
+            $user = $this->post('user');
             $pwd = $this->post('pwd');
 
             //AUTHENTICATING PARAMETERS
