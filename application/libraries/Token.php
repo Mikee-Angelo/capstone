@@ -9,7 +9,7 @@ class Token extends JWT{
     #CHANGE KEY
     private $key = '@McQfThWmZq4t7w!z%C*F-JaNdRgUkXn';
     #FOR ISS
-    private $url = 'http://localhost:8888/book-v1/';
+    private $url = 'http://localhost/modules/';
     #FOR AUD
     private $aud = 'api/v1/';
 
@@ -69,7 +69,7 @@ class Token extends JWT{
         #STORE AUTHORIZATION HEADER 
         $token = $arr['AUTHORIZATION'];
         #SETTING TOKEN FOR VALIDATION
-        $this->CI->form_validation->set_data(['t' => $token]);
+        $this->CI->form_validation->set_data(['token' => $token]);
         
         #VALIDATING TOKEN
         if($this->CI->form_validation->run('t') == FALSE){
@@ -84,7 +84,7 @@ class Token extends JWT{
                 throw new Exception($decoded);
             }
 
-            return (array) $decoded;
+            return ['status' => TRUE, 'token' => (array) $decoded ];
 
         }catch(Exception $e){
 

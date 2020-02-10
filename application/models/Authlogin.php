@@ -3,12 +3,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Authlogin extends CI_Model{
 
-    public function init($user, $pwd){
+    public function student($user, $pwd){
         /**
          * TABLE_NAME - admin
-         * COLUMN_NAME - a_user, a_pwd, a_id, a_user
+         * COLUMN_NAME - id_number, password, id, id_number
          */
-        $q = $this->db->select('a_user, a_pwd, a_id')->from('admin')->where('a_user', $user)->get();
+        $q = $this->db->select('id_number, password, id')->from('students')->where('id_number', $user)->get();
         $row = $q->row();
 
         if($q->num_rows() == 0){
@@ -18,14 +18,68 @@ class Authlogin extends CI_Model{
         /**
          * DECRYPTING HASHED PASSWORD
          */
-        if(password_verify($pwd, $row->a_pwd)){
-            $this->db->insert('action_logs', ['message' => 'Admin Logged In']);
+        if(password_verify($pwd, $row->password)){
             return [
-                'id' => $row->a_id,
+                'type' => 'student',
+                'id' => $row->id,
                 'user' => $user
             ];
         }
 
         return NULL;   
     }
+
+    public function admin($user, $pwd){
+        /**
+         * TABLE_NAME - admin
+         * COLUMN_NAME - id_number, password, id, id_number
+         */
+        $q = $this->db->select('username, password, id')->from('admin')->where('username', $user)->get();
+        $row = $q->row();
+
+        if($q->num_rows() == 0){
+            return FALSE;
+        }
+ 
+        /**
+         * DECRYPTING HASHED PASSWORD
+         */
+        if(password_verify($pwd, $row->password)){
+            return [
+                'type' => 'admin',
+                'id' => $row->id,
+                'user' => $user
+            ];
+        }
+
+        return NULL;   
+    }
+
+    public function faculty($user, $pwd){
+        /**
+         * TABLE_NAME - admin
+         * COLUMN_NAME - id_number, password, id, id_number
+         */
+        $q = $this->db->select('id_number, password, id, type')->from('faculty')->where('id_number', $user)->get();
+        $row = $q->row();
+
+        if($q->num_rows() == 0){
+            return FALSE;
+        }
+ 
+        /**
+         * DECRYPTING HASHED PASSWORD
+         */
+        if(password_verify($pwd, $row->password)){
+            return [
+                'type' => 'faculty',
+                'role' => $row->type,
+                'id' => $row->id,
+                'user' => $user
+            ];
+        }
+
+        return NULL;   
+    }
+
 }

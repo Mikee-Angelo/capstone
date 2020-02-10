@@ -53,4 +53,47 @@ $route['default_controller'] = 'auth';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
 
+//AUTHENTICATION MICROSERVICE
 $route['api/v1/login/student'] = 'Auth/student';
+$route['api/v1/login/admin'] = 'Auth/admin';
+$route['api/v1/login/faculty'] = 'Auth/faculty';
+
+//STUDENTS MICROSERVICE
+$route['api/v1/students'] = 'Students/index';
+
+//ADMIN MICROSERVICE
+$route['api/v1/admin'] = 'Admin/index';
+
+//COURSES MICROSERVICE
+$route['api/v1/courses'] = 'Course/index';
+
+//DEPARTMENTS MICROSERVICE
+$route['api/v1/departments'] = 'Departments/index';
+
+//SUBJECT MICROSERVICE
+$route['api/v1/subjects'] = 'Subjects/index';
+
+//REPORTS MICROSERVICE
+$route['api/v1/reports'] = 'Reports/index';
+
+//REPORTS MICROSERVICE
+$route['api/v1/faculty'] = 'Faculty/index';
+
+//REPORTS MICROSERVICE
+$route['api/v1/faculty'] = 'Faculty/index';
+$route['api/v1/faculty/degree'] = 'Faculty/degree';
+$route['api/v1/faculty/taught'] = 'Faculty/taught';
+$route['api/v1/faculty/qualifications'] = 'Faculty/qualifications';
+
+//GENDER 
+$route['api/v1/genders'] = 'Gender/index';
+//CITIZENSHIP 
+$route['api/v1/citizenships'] = 'Citizenship/index';
+//CIVIL STATUS 
+$route['api/v1/civil-status'] = 'Civilstatus/index';
+//STATUS 
+$route['api/v1/status'] = 'Status/index';
+//REPORT ACTION 
+$route['api/v1/actions'] = 'Action/index';
+//FACULTY TYPES
+$route['api/v1/types'] = 'Types/index';
