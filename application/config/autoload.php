@@ -62,7 +62,8 @@ $autoload['libraries'] = array(
     'form_validation',
     'sanitizer',
     'token',
-    'database'
+    'database',
+    'headers'
 );
 
 /*

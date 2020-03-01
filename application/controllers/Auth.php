@@ -62,7 +62,10 @@ class Auth extends RestController {
                 $this->response([
                     'status' => true,
                     'token' => $this->token->generate('auth', $i),
-                    'data' => $i
+                    'data' => [
+                        'id' => $i['id'],
+                        'user' => $i['user']
+                    ]
                 ], 200);
                    
             }
@@ -120,7 +123,10 @@ class Auth extends RestController {
                 $this->response([
                     'status' => true,
                     'token' => $this->token->generate('auth', $i),
-                    'data' => $i
+                    'data' => [
+                        'id' => $i['id'],
+                        'user' => $i['user']
+                    ]
                 ], 200);
                    
             }
@@ -178,7 +184,10 @@ class Auth extends RestController {
                 $this->response([
                     'status' => true,
                     'token' => $this->token->generate('auth', $i),
-                    'data' => $i
+                    'data' => [                                
+                        'id' => $i['id'],
+                        'user' => $i['user']
+                    ]
                 ], 200);
                    
             }

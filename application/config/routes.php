@@ -60,6 +60,8 @@ $route['api/v1/login/faculty'] = 'Auth/faculty';
 
 //STUDENTS MICROSERVICE
 $route['api/v1/students'] = 'Students/index';
+$route['api/v1/students/subjects'] = 'Students/subject';
+
 
 //ADMIN MICROSERVICE
 $route['api/v1/admin'] = 'Admin/index';

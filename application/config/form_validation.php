@@ -121,6 +121,11 @@ $config = [
             'label' => 'Student ID',
             'rules' => 'required|numeric'
         ],
+        'case_name' => [
+            'field' => 'case_name', 
+            'label' => 'Case Name',
+            'rules' => 'required'
+        ],
         'narration_incident' => [
             'field' => 'narration_incident', 
             'label' => 'Narration Incident',
@@ -134,6 +139,70 @@ $config = [
         'remark' => [
             'field' => 'remark', 
             'label' => 'status',
+            'rules' => 'required'
+        ],
+    ],
+
+    'reports_update' => [
+        'student_id' => [
+            'field' => 'student_id', 
+            'label' => 'Student ID',
+            'rules' => 'required|numeric'
+        ],
+        'report_id' => [
+            'field' => 'report_id', 
+            'label' => 'Report ID',
+            'rules' => 'required|numeric'
+        ],
+        'case_name' => [
+            'field' => 'case_name', 
+            'label' => 'Case Name',
+            'rules' => 'required'
+        ],
+        'narration_incident' => [
+            'field' => 'narration_incident', 
+            'label' => 'Narration Incident',
+            'rules' => 'required'
+        ],
+        'action_taken' => [
+            'field' => 'action_taken', 
+            'label' => 'Action Taken',
+            'rules' => 'required'
+        ],
+        'remark' => [
+            'field' => 'remark', 
+            'label' => 'Remarks',
+            'rules' => 'required'
+        ],
+    ],
+
+    'reports_student_add' => [
+        'student_id' => [
+            'field' => 'student_id', 
+            'label' => 'Student ID',
+            'rules' => 'required|numeric'
+        ],
+        'narration_incident' => [
+            'field' => 'narration_incident', 
+            'label' => 'Narration Incident',
+            'rules' => 'required'
+        ],
+    ],
+
+    'reports_student_update' => [
+        'student_id' => [
+            'field' => 'student_id', 
+            'label' => 'Student ID',
+            'rules' => 'required|numeric'
+        ],
+        'report_id' => [
+            'field' => 'report_id', 
+            'label' => 'Report ID',
+            'rules' => 'required|numeric'
+        ],
+        'narration_incident' => [
+            'field' => 'narration_incident', 
+            'label' => 'Narration Incident',
             'rules' => 'required'
         ],
     ],
@@ -353,6 +422,19 @@ $config = [
             'label' => 'Faculty ID',
             'rules' => 'required|numeric'
         ]
+    ],
+
+    'ss_add' => [
+        'q_title' => [
+            'field' => 'ss_student_id', 
+            'label' => 'Student ID',
+            'rules' => 'required|numeric'
+        ],
+        'q_id' => [
+            'field' => 'ss_subject_id', 
+            'label' => 'Subjects ID',
+            'rules' => 'required|numeric'
+        ],
     ],
 
 ];
