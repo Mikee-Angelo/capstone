@@ -3,7 +3,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Main extends CI_Model{
     private $query, $type, $id, $column;
-    private $reserved = ['sort', 'fields', 'limit'];
+    private $reserved = ['sort', 'fields', 'limit', 'absolute'];
 
     public function init($id = '', $type = '', $query, $column){
         $this->id = $id;
@@ -28,12 +28,21 @@ class Main extends CI_Model{
         $intersect = array_intersect_key($this->query, array_flip($this->column));
 
         if(!empty($intersect)){
-            $this->db->like ($intersect);
+            if(array_key_exists($this->reserved[3], $this->query)){
+
+                if($this->query['absolute'] == 'true'){
+                    $this->db->where($intersect);
+                }
+            }else{
+                $this->db->like($intersect, 'before');
+            }
         }
     }
 
     public function type_check(){
         if($this->type == 'student'){
+            $this->db->where('id', $this->id);
+        }elseif($this->type == 'faculty'){
             $this->db->where('id', $this->id);
         }
 

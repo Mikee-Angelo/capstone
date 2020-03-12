@@ -6,7 +6,7 @@ class MCitizenship extends CI_Model{
     /**
      * FOR GET SERVICES
      */
-    public function fetch($id, $type, $query){
+    public function fetch($id = null, $type = null , $query = []){
         /**
          * VALIDATING USER
          */

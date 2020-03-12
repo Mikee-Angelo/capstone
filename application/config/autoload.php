@@ -63,7 +63,9 @@ $autoload['libraries'] = array(
     'sanitizer',
     'token',
     'database',
-    'headers'
+    'headers',
+    'arrayutils',
+    'filemanager'
 );
 
 /*

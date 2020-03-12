@@ -3,7 +3,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class MDepartments extends CI_Model{
     private $column = [
-        'dept_id', 'dept_name'
+        'dept_id', 'dept_name', 'dept_abbv', 'dept_img_path'
     ];
 
     /**
@@ -38,8 +38,8 @@ class MDepartments extends CI_Model{
     /**
      * FOR POST SERVICES
      */
-    public function add($id, $datas){
-        $this->db->insert_batch('departments', $datas);
+    public function add($datas){
+        $this->db->insert('departments', $datas);
         
         return $this->db->affected_rows();
     }
@@ -56,10 +56,28 @@ class MDepartments extends CI_Model{
         return $this->db->affected_rows();
     }
 
-    public function update($id , $data){
+    public function update($data){
+        $id = $data['dept_id'];
+        unset($data['dept_id']);
+        
         $this->db->where('dept_id', $id);
         $this->db->update('departments', $data);
 
         return $this->db->affected_rows();
     }
+
+    /**
+     * STUDENTS PROFILE PICTURE UPLOADED BY THE ADMIN
+     */
+    
+    public function set_profile_img($id, $img){
+        $this->db->update(
+            'departments',
+            [ 'dept_img_path' => $img],
+            [ 'dept_id' => $id]
+        );
+
+        return $this->db->affected_rows();
+    }
+
 }

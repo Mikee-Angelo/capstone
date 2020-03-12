@@ -5,7 +5,6 @@ class MSubjects extends CI_Model{
     private $column = [
         'subject_id', 'course.course_id', 'subject_code', 'subject_name', 'subject.date_created'
     ];
-
     /**
      * FOR GET SERVICES
      */
@@ -56,7 +55,10 @@ class MSubjects extends CI_Model{
         return $this->db->affected_rows();
     }
 
-    public function update($id, $data){
+    public function update($data){
+        $id = $data['id'];
+        unset($data['id']);
+        
         $this->db->where('subject_id', $id);
         $this->db->update('subject', $data);
 

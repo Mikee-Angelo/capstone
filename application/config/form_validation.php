@@ -36,13 +36,18 @@ $config = [
             'label' => 'ID',
             'rules' => 'required|numeric'
         ], 
-        'course_code' => [
-            'field' => 'course_code', 
+        'course_type[]' => [
+            'field' => 'course_type[]', 
+            'label' => 'Course Type',
+            'rules' => 'required|numeric'
+        ], 
+        'course_abbv[]' => [
+            'field' => 'course_abbv[]', 
             'label' => 'Course Code',
             'rules' => 'required'
         ],  
-        'course_name' => [
-            'field' => 'course_name', 
+        'course_name[]' => [
+            'field' => 'course_name[]', 
             'label' => 'Course Name',
             'rules' => 'required'
         ], 
@@ -54,23 +59,46 @@ $config = [
             'label' => 'ID',
             'rules' => 'required|numeric'
         ], 
-        'department_id' => [
-            'field' => 'department_id', 
+        'department_id[]' => [
+            'field' => 'department_id[]', 
             'label' => 'ID',
             'rules' => 'required|numeric'
         ], 
-        'course_name' => [
-            'field' => 'course_name', 
+        'course_name[]' => [
+            'field' => 'course_name[]', 
             'label' => 'Course Name',
             'rules' => 'required'
         ], 
     ],
 
     'department_add' => [
-        'department_name' => [
-            'field' => 'department_name', 
+        'dept_name' => [
+            'field' => 'dept_name', 
             'label' => 'Department Name',
-            'rules' => 'required'
+            'rules' => 'required|is_unique[departments.dept_name]'
+        ], 
+        'dept_abbv' => [
+            'field' => 'dept_abbv', 
+            'label' => 'Department Code',
+            'rules' => 'required|is_unique[departments.dept_abbv]|alpha'
+        ],
+    ],
+
+    'department_update' => [
+        'dept_id' => [
+            'field' => 'dept_id', 
+            'label' => 'Department ID',
+            'rules' => 'required|numeric'
+        ], 
+        'dept_name' => [
+            'field' => 'dept_name', 
+            'label' => 'Department Name',
+            'rules' => 'required|is_unique[departments.dept_name]'
+        ], 
+        'dept_abbv' => [
+            'field' => 'dept_abbv', 
+            'label' => 'Department Code',
+            'rules' => 'required|is_unique[departments.dept_abbv]|alpha'
         ],
     ],
     
@@ -80,13 +108,13 @@ $config = [
             'label' => 'Course ID',
             'rules' => 'required|numeric'
         ],
-        'subject_code' => [
-            'field' => 'subject_code', 
+        'subject_code[]' => [
+            'field' => 'subject_code[]', 
             'label' => 'Course Code',
             'rules' => 'required'
         ],
-        'subject_name' => [
-            'field' => 'subject_name', 
+        'subject_name[]' => [
+            'field' => 'subject_name[]', 
             'label' => 'Subject Name',
             'rules' => 'required'
         ],
@@ -119,6 +147,11 @@ $config = [
         'student_id' => [
             'field' => 'student_id', 
             'label' => 'Student ID',
+            'rules' => 'required|numeric'
+        ],
+        'rs_student_id[]' => [
+            'field' => 'rs_student_id[]', 
+            'label' => 'Violators ID',
             'rules' => 'required|numeric'
         ],
         'case_name' => [
@@ -221,75 +254,116 @@ $config = [
     ],
 
     'faculty_add' => [
-        'faculty_name' => [
-            'field' => 'faculty_name', 
-            'label' => 'Faculty Name',
-            'rules' => 'required'
+        'faculty_type' => [
+            'field' => 'faculty_type', 
+            'label' => 'Faculty Type',
+            'rules' => 'required|numeric'
+        ],
+        'faculty_sur_name' => [
+            'field' => 'faculty_sur_name', 
+            'label' => 'Sur Name',
+            'rules' => 'required|alpha_numeric_spaces'
+        ],
+        'faculty_first_name' => [
+            'field' => 'faculty_first_name', 
+            'label' => 'First Name',
+            'rules' => 'required|alpha_numeric_spaces'
+        ],
+        'faculty_middle_name' => [
+            'field' => 'faculty_middle_name', 
+            'label' => 'Middle Name',
+            'rules' => 'alpha_numeric_spaces'
         ],
         'department' => [
             'field' => 'department', 
             'label' => 'Department',
             'rules' => 'required|numeric'
         ],
-        'type' => [
-            'field' => 'type', 
-            'label' => 'Type',
+        'gender' => [
+            'field' => 'gender', 
+            'label' => 'Gender',
             'rules' => 'required|numeric'
+        ],
+        'contact_no' => [
+            'field' => 'contact_no', 
+            'label' => 'Contact Number',
+            'rules' => 'required|numeric'
+        ],
+        'email' => [
+            'field' => 'email', 
+            'label' => 'Email',
+            'rules' => 'required|valid_email'
         ],
         'id_number' => [
             'field' => 'id_number', 
             'label' => 'ID Number',
-            'rules' => 'required'
+            'rules' => 'required|min_length[6]'
         ],
         'employment_status' => [
             'field' => 'employment_status', 
             'label' => 'Employment Status',
-            'rules' => 'required|numeric'
-        ],
-        'department' => [
-            'field' => 'department', 
-            'label' => 'Department',
             'rules' => 'required|numeric'
         ],
     ],
 
     'faculty_update' => [
-        'faculty_id' => [
-            'field' => 'faculty_id', 
+        'id' => [
+            'field' => 'id', 
             'label' => 'Faculty ID',
             'rules' => 'required|numeric'
         ],
-        'faculty_name' => [
-            'field' => 'faculty_name', 
-            'label' => 'Faculty Name',
-            'rules' => 'required'
+        'faculty_type' => [
+            'field' => 'faculty_type', 
+            'label' => 'Faculty Type',
+            'rules' => 'required|numeric'
+        ],
+        'faculty_sur_name' => [
+            'field' => 'faculty_sur_name', 
+            'label' => 'Sur Name',
+            'rules' => 'required|alpha_numeric_spaces'
+        ],
+        'faculty_first_name' => [
+            'field' => 'faculty_first_name', 
+            'label' => 'First Name',
+            'rules' => 'required|alpha_numeric_spaces'
+        ],
+        'faculty_middle_name' => [
+            'field' => 'faculty_middle_name', 
+            'label' => 'Middle Name',
+            'rules' => 'alpha_numeric_spaces'
         ],
         'department' => [
             'field' => 'department', 
             'label' => 'Department',
             'rules' => 'required|numeric'
         ],
-        'type' => [
-            'field' => 'type', 
-            'label' => 'Type',
+        'gender' => [
+            'field' => 'gender', 
+            'label' => 'Gender',
             'rules' => 'required|numeric'
+        ],
+        'contact_no' => [
+            'field' => 'contact_no', 
+            'label' => 'Contact Number',
+            'rules' => 'required|numeric'
+        ],
+        'email' => [
+            'field' => 'email', 
+            'label' => 'Email',
+            'rules' => 'required|valid_email'
         ],
         'id_number' => [
             'field' => 'id_number', 
             'label' => 'ID Number',
-            'rules' => 'required'
+            'rules' => 'required|min_length[6]'
         ],
         'employment_status' => [
             'field' => 'employment_status', 
             'label' => 'Employment Status',
             'rules' => 'required|numeric'
         ],
-        'department' => [
-            'field' => 'department', 
-            'label' => 'Department',
-            'rules' => 'required|numeric'
-        ],
     ],
+
 
     'degree_add' => [
         'degree_title' => [
@@ -297,84 +371,64 @@ $config = [
             'label' => 'Degree Title',
             'rules' => 'required'
         ],
-        'faculty_id' => [
-            'field' => 'faculty_id', 
+        'degree_faculty_id' => [
+            'field' => 'degree_faculty_id', 
             'label' => 'Faculty ID',
             'rules' => 'required|numeric'
         ]
     ],
 
     'degree_delete' => [
-        'facult_id' => [
-            'field' => 'faculty_id',
-            'label' => 'ID',
-            'rules' => 'required|numeric'
-        ],
         'degree_id' => [
-            'field' => 'id[]', 
-            'label' => 'ID',
+            'field' => 'degree_id[]', 
+            'label' => 'Degree ID',
             'rules' => 'required|numeric'
-        ], 
+        ]
     ],
 
     'degree_update' => [
         'degree_title' => [
-            'field' => 'faculty_name[]', 
-            'label' => 'Faculty Name',
+            'field' => 'degree_title[]', 
+            'label' => 'Degree Title',
             'rules' => 'required'
         ],
         'degree_id' => [
             'field' => 'degree_id[]', 
             'label' => 'Degree ID',
             'rules' => 'required|numeric'
-        ],
-        'faculty_id' => [
-            'field' => 'department', 
-            'label' => 'Department',
-            'rules' => 'required|numeric'
         ]
     ],
     
     'taught_add' => [
-        'course_id' => [
-            'field' => 'faculty_name[]', 
-            'label' => 'Faculty Name',
+        'sf_subject_id' => [
+            'field' => 'sf_subject_id[]', 
+            'label' => 'Subject ID',
             'rules' => 'required|numeric'
         ],
-        'faculty_id' => [
-            'field' => 'faculty_id', 
+        'sf_faculty_id' => [
+            'field' => 'sf_faculty_id', 
             'label' => 'Faculty ID',
             'rules' => 'required|numeric'
         ]
     ],
 
     'taught_delete' => [
-        'facult_id' => [
-            'field' => 'faculty_id',
-            'label' => 'ID',
-            'rules' => 'required|numeric'
-        ],
-        'taught_id' => [
-            'field' => 'id[]', 
-            'label' => 'ID',
+        'sf_id' => [
+            'field' => 'sf_id[]', 
+            'label' => 'Subject Taught ID',
             'rules' => 'required|numeric'
         ], 
     ],
 
     'taught_update' => [
-        'course_id' => [
-            'field' => 'course_id[]', 
-            'label' => 'Course ID',
+        'sf_subject_id' => [
+            'field' => 'sf_subject_id[]', 
+            'label' => 'Subject ID',
             'rules' => 'required|numberic'
         ],
-        'taught_id' => [
-            'field' => 'taught_id[]', 
-            'label' => 'Degree ID',
-            'rules' => 'required|numeric'
-        ],
-        'faculty_id' => [
-            'field' => 'faculty_id', 
-            'label' => 'Faculty ID',
+        'sf_id' => [
+            'field' => 'sf_id[]', 
+            'label' => 'Subject Taught ID',
             'rules' => 'required|numeric'
         ]
     ],
@@ -386,19 +440,14 @@ $config = [
             'label' => 'Qualifications Title',
             'rules' => 'required'
         ],
-        'faculty_id' => [
-            'field' => 'faculty_id', 
+        'q_faculty_id' => [
+            'field' => 'q_faculty_id', 
             'label' => 'Faculty ID',
             'rules' => 'required|numeric'
         ]
     ],
 
     'qualifications_delete' => [
-        'facult_id' => [
-            'field' => 'faculty_id',
-            'label' => 'FacultyID',
-            'rules' => 'required|numeric'
-        ],
         'q_id' => [
             'field' => 'id[]', 
             'label' => 'ID',
@@ -416,11 +465,6 @@ $config = [
             'field' => 'q_id[]', 
             'label' => 'Qualifications ID',
             'rules' => 'required|numeric'
-        ],
-        'faculty_id' => [
-            'field' => 'faculty_id', 
-            'label' => 'Faculty ID',
-            'rules' => 'required|numeric'
         ]
     ],
 
@@ -437,4 +481,259 @@ $config = [
         ],
     ],
 
+    'profile_img' => [
+        'id' => [
+            'field' => 'id', 
+            'label' => 'ID',
+            'rules' => 'required|numeric'
+        ],
+    ],
+
+    'department_img' => [
+        'id' => [
+            'field' => 'id', 
+            'label' => 'Department ID',
+            'rules' => 'required|numeric'
+        ],
+    ],
+
+    'students_add' => [
+        'id_number' => [
+            'field' => 'id_number[]', 
+            'label' => 'Student ID Number',
+            'rules' => 'required'
+        ],
+        'sur_name' => [
+            'field' => 'sur_name[]', 
+            'label' => 'Sur Name',
+            'rules' => 'required'
+        ],
+        'first_name' => [
+            'field' => 'first_name[]', 
+            'label' => 'First Name',
+            'rules' => 'required'
+        ],
+        'middle_name' => [
+            'field' => 'middle_name[]', 
+            'label' => 'Middle Name',
+            'rules' => 'required'
+        ],
+        'course' => [
+            'field' => 'course[]', 
+            'label' => 'Course',
+            'rules' => 'required|numeric'
+        ],
+        'year_level' => [
+            'field' => 'year_level[]', 
+            'label' => 'Year Level',
+            'rules' => 'required|numeric'
+        ],
+        'academic_year' => [
+            'field' => 'academic_year[]', 
+            'label' => 'Academic Year',
+            'rules' => 'required|numeric'
+        ],
+        'birthdate' => [
+            'field' => 'birthdate[]', 
+            'label' => 'Birthdate',
+            'rules' => 'required'
+        ],
+        'birth_place' => [
+            'field' => 'birth_place[]', 
+            'label' => 'Birthplace',
+            'rules' => 'required'
+        ],
+        'gender' => [
+            'field' => 'gender[]', 
+            'label' => 'Gender',
+            'rules' => 'required|numeric'
+        ],
+        'citizenship' => [
+            'field' => 'citizenship[]', 
+            'label' => 'Citizenship',
+            'rules' => 'required|numeric'
+        ],
+        'civil_status' => [
+            'field' => 'civil_status[]', 
+            'label' => 'Civil Status',
+            'rules' => 'required|numeric'
+        ],
+        'religion' => [
+            'field' => 'religion[]', 
+            'label' => 'Religion',
+            'rules' => 'required'
+        ],
+        'email' => [
+            'field' => 'email[]', 
+            'label' => 'Email',
+            'rules' => 'required'
+        ],
+        'contact_no' => [
+            'field' => 'contact_no[]', 
+            'label' => 'Contact Number',
+            'rules' => 'required|numeric'
+        ],
+        'p_address' => [
+            'field' => 'p_address[]', 
+            'label' => 'Permanent Address',
+            'rules' => 'required'
+        ],
+        't_address' => [
+            'field' => 't_address[]', 
+            'label' => 'Temporary Address',
+            'rules' => 'required'
+        ],
+        'mother' => [
+            'field' => 'mother[]', 
+            'label' => 'Mother\'s Name',
+            'rules' => 'required'
+        ],
+        'mother_no' => [
+            'field' => 'mother_no[]', 
+            'label' => 'Mother Contact Number',
+            'rules' => 'required|numeric'
+        ],
+        'father' => [
+            'field' => 'father[]', 
+            'label' => 'Father\'s Name',
+            'rules' => 'required'
+        ],
+        'father_no' => [
+            'field' => 'father_no[]', 
+            'label' => 'Father Contact Number',
+            'rules' => 'required|numeric'
+        ],
+        'guardian' => [
+            'field' => 'guardian[]', 
+            'label' => 'Guardian\'s Name',
+            'rules' => 'required'
+        ],
+        'guardian_no' => [
+            'field' => 'guardian_no[]', 
+            'label' => 'Guardian Contact Number',
+            'rules' => 'required|numeric'
+        ],
+    ],
+    'students_add' => [
+        'id' => [
+            'field' => 'id', 
+            'label' => 'ID',
+            'rules' => 'required|numeric'
+        ],
+        'id_number' => [
+            'field' => 'id_number', 
+            'label' => 'Student ID Number',
+            'rules' => 'required'
+        ],
+        'sur_name' => [
+            'field' => 'sur_name', 
+            'label' => 'Sur Name',
+            'rules' => 'required'
+        ],
+        'first_name' => [
+            'field' => 'first_name', 
+            'label' => 'First Name',
+            'rules' => 'required'
+        ],
+        'middle_name' => [
+            'field' => 'middle_name', 
+            'label' => 'Middle Name',
+            'rules' => 'required'
+        ],
+        'course' => [
+            'field' => 'course', 
+            'label' => 'Course',
+            'rules' => 'required|numeric'
+        ],
+        'year_level' => [
+            'field' => 'year_level', 
+            'label' => 'Year Level',
+            'rules' => 'required|numeric'
+        ],
+        'academic_year' => [
+            'field' => 'academic_year', 
+            'label' => 'Academic Year',
+            'rules' => 'required|numeric'
+        ],
+        'birthdate' => [
+            'field' => 'birthdate', 
+            'label' => 'Birthdate',
+            'rules' => 'required'
+        ],
+        'birth_place' => [
+            'field' => 'birth_place', 
+            'label' => 'Birthplace',
+            'rules' => 'required'
+        ],
+        'gender' => [
+            'field' => 'gender', 
+            'label' => 'Gender',
+            'rules' => 'required|numeric'
+        ],
+        'citizenship' => [
+            'field' => 'citizenship', 
+            'label' => 'Citizenship',
+            'rules' => 'required|numeric'
+        ],
+        'civil_status' => [
+            'field' => 'civil_status', 
+            'label' => 'Civil Status',
+            'rules' => 'required|numeric'
+        ],
+        'religion' => [
+            'field' => 'religion', 
+            'label' => 'Religion',
+            'rules' => 'required'
+        ],
+        'email' => [
+            'field' => 'email', 
+            'label' => 'Email',
+            'rules' => 'required'
+        ],
+        'contact_no' => [
+            'field' => 'contact_no', 
+            'label' => 'Contact Number',
+            'rules' => 'required|numeric'
+        ],
+        'p_address' => [
+            'field' => 'p_address', 
+            'label' => 'Permanent Address',
+            'rules' => 'required'
+        ],
+        't_address' => [
+            'field' => 't_address', 
+            'label' => 'Temporary Address',
+            'rules' => 'required'
+        ],
+        'mother' => [
+            'field' => 'mother', 
+            'label' => 'Mother\'s Name',
+            'rules' => 'required'
+        ],
+        'mother_no' => [
+            'field' => 'mother_no', 
+            'label' => 'Mother Contact Number',
+            'rules' => 'required|numeric'
+        ],
+        'father' => [
+            'field' => 'father', 
+            'label' => 'Father\'s Name',
+            'rules' => 'required'
+        ],
+        'father_no' => [
+            'field' => 'father_no', 
+            'label' => 'Father Contact Number',
+            'rules' => 'required|numeric'
+        ],
+        'guardian' => [
+            'field' => 'guardian', 
+            'label' => 'Guardian\'s Name',
+            'rules' => 'required'
+        ],
+        'guardian_no' => [
+            'field' => 'guardian_no', 
+            'label' => 'Guardian Contact Number',
+            'rules' => 'required|numeric'
+        ],
+    ],
 ];

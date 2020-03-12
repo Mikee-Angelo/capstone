@@ -61,7 +61,7 @@ $route['api/v1/login/faculty'] = 'Auth/faculty';
 //STUDENTS MICROSERVICE
 $route['api/v1/students'] = 'Students/index';
 $route['api/v1/students/subjects'] = 'Students/subject';
-
+$route['api/v1/students/photos'] = 'Students/photos';
 
 //ADMIN MICROSERVICE
 $route['api/v1/admin'] = 'Admin/index';
@@ -71,21 +71,21 @@ $route['api/v1/courses'] = 'Course/index';
 
 //DEPARTMENTS MICROSERVICE
 $route['api/v1/departments'] = 'Departments/index';
+$route['api/v1/departments/photos'] = 'Departments/photos';
 
 //SUBJECT MICROSERVICE
 $route['api/v1/subjects'] = 'Subjects/index';
 
 //REPORTS MICROSERVICE
 $route['api/v1/reports'] = 'Reports/index';
+$route['api/v1/reports/reported'] = 'Reports/reported';
 
-//REPORTS MICROSERVICE
-$route['api/v1/faculty'] = 'Faculty/index';
-
-//REPORTS MICROSERVICE
+//FACULTY1 MICROSERVICE
 $route['api/v1/faculty'] = 'Faculty/index';
 $route['api/v1/faculty/degree'] = 'Faculty/degree';
 $route['api/v1/faculty/taught'] = 'Faculty/taught';
 $route['api/v1/faculty/qualifications'] = 'Faculty/qualifications';
+$route['api/v1/faculty/photos'] = 'Faculty/photos';
 
 //GENDER 
 $route['api/v1/genders'] = 'Gender/index';

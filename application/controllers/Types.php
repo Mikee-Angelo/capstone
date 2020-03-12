@@ -1,55 +1,42 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-require FCPATH . 'vendor/autoload.php';
-
 use chriskacerguis\RestServer\RestController;
 
 class Types extends RestController {
-    private $aud = 'types';
-    
+    private $t, $id, $user, $type;
+
     public function __construct(){
         parent::__construct();
-    }
 
-    public function index_get(){
-        /**
-         * CHECKING TOKEN
-         */
+        //Validates token if valid JWT Token
         $token = $this->token->validate();
 
         if($token['status'] != TRUE){
             $this->response([
                 'status' => $token['status'],
                 'message' => $token['e']
-            ], 200);
+            ], 404);
         }
-    
-        $type = $token['token']['data']->type;
-        $id = $token['token']['data']->id;
-        $user = $token['token']['data']->user;
-        $query = $this->get();
-        $td = $this->token->generate($this->aud, $token['token']['data']);
 
-        /**
-         * SANITIZING INPUT OF POST DATA FOR XSS ATTACK
-         */
-        if($this->sanitizer->xss($query) !== TRUE){
+        //Generates JWT Token
+        $td = $this->token->generate('subjects', $token['token']['data']);
+
+        //Assign data to private variable
+        $this->type = $token['token']['data']->type;
+        $this->id = $token['token']['data']->id;
+        $this->user = $token['token']['data']->user;
+        $this->t = $td;
+    }
+
+    public function index_get(){
+        //Sanitizes input data to avoid XSS Attack
+        if($this->sanitizer->xss($this->get(s)) !== TRUE){
             $this->response([
                 'status' => false,
-                'token' => $td,
+                'token' => $this->t,
                 'message' => 'Error Handling Data'
             ], 404);            
-        }
-
-        $val = $this->validation->method_one($id, $user, $type);
-
-        if($val['status'] == FALSE){
-            $this->response([
-                'status' => $val['status'],
-                'token' => $td,
-                'message' => $val['e']
-            ], 200);      
         }
 
         $i = $this->mgender->fetch(null , null, []);
@@ -57,14 +44,14 @@ class Types extends RestController {
         if(empty($i)){
             $this->response([
                 'status' => FALSE,
-                'token' => $td,
+                'token' => $this->t,
                 'message' => 'No Data Found'
             ], 200);
         }
 
         $this->response([
             'status' => TRUE,
-            'token' => $td,
+            'token' => $this->t,
             'data' => $i
         ], 200);
     }

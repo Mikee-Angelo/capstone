@@ -40,6 +40,7 @@ class ComposerStaticInit1135ca82b30d5e28307d52bb7ad17d4c
         'D' => 
         array (
             'Doctrine\\Instantiator\\' => 22,
+            'Delight\\FileUpload\\' => 19,
             'DeepCopy\\' => 9,
         ),
     );
@@ -78,6 +79,10 @@ class ComposerStaticInit1135ca82b30d5e28307d52bb7ad17d4c
         'Doctrine\\Instantiator\\' => 
         array (
             0 => __DIR__ . '/..' . '/doctrine/instantiator/src/Doctrine/Instantiator',
+        ),
+        'Delight\\FileUpload\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/delight-im/file-upload/src',
         ),
         'DeepCopy\\' => 
         array (

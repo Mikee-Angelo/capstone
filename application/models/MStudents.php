@@ -58,7 +58,7 @@ class MStudents extends CI_Model{
     /**
      * FOR POST SERVICES
      */
-    public function add($id, $datas){
+    public function add($datas){
         $this->db->insert_batch('students', $datas);
         
         return $this->db->affected_rows();
@@ -76,6 +76,15 @@ class MStudents extends CI_Model{
         return $this->db->affected_rows();
     }
 
+    public function update($data){
+        $id = ['id' => $data['id']];
+        unset($data['id']);
+
+        $this->db->where($id);
+        $this->db->update($data);
+
+        return $this->db->affected_rows();
+    }
     /**
      * 
      * GETTING ALL THE STUDENT'S SUBJECT
@@ -108,7 +117,7 @@ class MStudents extends CI_Model{
         return $i;
     }
 
-    public function subject_add($id, $datas){
+    public function subject_add($datas){
         $map = array_map(array('this', $_map), $datas);
         $this->db->insert_batch('student_subject', $map);
         
@@ -137,6 +146,20 @@ class MStudents extends CI_Model{
         }
 
         $this->db->delete('student_subject');
+
+        return $this->db->affected_rows();
+    }
+
+    /**
+     * STUDENTS PROFILE PICTURE UPLOADED BY THE ADMIN
+     */
+    
+    public function set_profile_img($id, $img){
+        $this->db->update(
+            'students',
+            [ 'img_path' => $img],
+            [ 'id' => $id]
+        );
 
         return $this->db->affected_rows();
     }

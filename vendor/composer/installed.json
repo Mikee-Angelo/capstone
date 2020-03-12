@@ -35,6 +35,47 @@
         "description": "CI Rest Server"
     },
     {
+        "name": "delight-im/file-upload",
+        "version": "v1.2.0",
+        "version_normalized": "1.2.0.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/delight-im/PHP-FileUpload.git",
+            "reference": "a793f4b9d6d2fc4ce57487c324a1547cce942cb6"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/delight-im/PHP-FileUpload/zipball/a793f4b9d6d2fc4ce57487c324a1547cce942cb6",
+            "reference": "a793f4b9d6d2fc4ce57487c324a1547cce942cb6",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.6.0"
+        },
+        "time": "2018-03-13T18:36:56+00:00",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "Delight\\FileUpload\\": "src/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "description": "Simple and convenient file uploads — secure by default",
+        "homepage": "https://github.com/delight-im/PHP-FileUpload",
+        "keywords": [
+            "file",
+            "files",
+            "form",
+            "input",
+            "upload",
+            "validation"
+        ]
+    },
+    {
         "name": "doctrine/instantiator",
         "version": "1.3.0",
         "version_normalized": "1.3.0.0",

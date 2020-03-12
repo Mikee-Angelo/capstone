@@ -6,132 +6,93 @@ require FCPATH . 'vendor/autoload.php';
 use chriskacerguis\RestServer\RestController;
 
 class Admin extends RestController {
-    private $aud = 'admin';
+    private $t, $id, $user, $type;
 
     public function __construct(){
         parent::__construct();
-    }
 
-    public function index_get(){
-
-        /**
-         * CHECKING TOKEN
-         */
+        //Validates token if valid JWT Token
         $token = $this->token->validate();
 
         if($token['status'] != TRUE){
             $this->response([
                 'status' => $token['status'],
                 'message' => $token['e']
-            ], 200);
+            ], 404);
         }
-    
-        $type = $token['token']['data']->type;
-        $id = $token['token']['data']->id;
-        $user = $token['token']['data']->user;
-        $query = $this->get();
-        $td = $this->token->generate($this->aud, $token['token']['data']);
 
-        /**
-         * SANITIZING INPUT OF POST DATA FOR XSS ATTACK
-         */
-        if($this->sanitizer->xss($query) !== TRUE){
+        //Generates JWT Token
+        $td = $this->token->generate('admin', $token['token']['data']);
+
+        //Assign data to private variable
+        $this->type = $token['token']['data']->type;
+        $this->id = $token['token']['data']->id;
+        $this->user = $token['token']['data']->user;
+        $this->t = $td;
+    }
+
+    public function index_get(){
+
+        //Sanitizes input data to avoid XSS Attack
+        if($this->sanitizer->xss($this->get()) !== TRUE){
             $this->response([
                 'status' => false,
-                'token' => $td,
+                'token' => $this->t,
                 'message' => 'Error Handling Data'
             ], 404);            
         }
 
-        if($type != 'admin'){
+        //Only admin can use this function
+        if($this->type != 'admin'){
             $this->response([
                 'status' => FALSE,
-                'token' => $td,
                 'message' => 'Unauthorized User Type'
             ], 401);      
         }
 
-        $val = $this->validation->method_one($id, $user, $type);
-
-        if($val['status'] == FALSE){
-            $this->response([
-                'status' => $val['status'],
-                'token' => $td,
-                'message' => $val['e']
-            ], 200);      
-        }
-
-        $i = $this->madmin->fetch($id, $type, $query);
+        $i = $this->madmin->fetch($this->id, $this->type, $this->get());
 
         if(empty($i)){
             $this->response([
                 'status' => FALSE,
-                'token' => $td,
+                'token' => $this->t,
                 'message' => 'No Data Found'
             ], 200);
         }
 
         $this->response([
             'status' => TRUE,
-            'token' => $td,
+            'token' => $this->t,
             'data' => $i
         ], 200);
     }
 
     public function index_post(){
 
-        /**
-         * CHECKING TOKEN
-         */
-        $token = $this->token->validate();
-
-        if($token['status'] != TRUE){
-            $this->response([
-                'status' => $token['status'],
-                'message' => $token['e']
-            ], 200);
-        }  
-        
-        $type = $token['token']['data']->type;
-        $id = $token['token']['data']->id;
-        $user = $token['token']['data']->user;
-        $td = $this->token->generate($this->aud, $token['token']['data']);
-        /**
-         * SANITIZING INPUT OF POST DATA FOR XSS ATTACK
-         */
-        if($this->sanitizer->xss($this->post()) !== TRUE){
-            $this->response([
-                'status' => false,
-                'token' => $td,
-                'message' => 'Error Handling Data'
-            ], 404);            
-        }
-
-        if($type != 'admin'){
+        //Only admin can use this function
+        if($this->type != 'admin'){
             $this->response([
                 'status' => FALSE,
-                'token' => $td,
                 'message' => 'Unauthorized User Type'
             ], 401);      
         }
 
-        $val = $this->validation->method_one($id, $user, $type);
-
-        if($val['status'] == FALSE){
+        //Sanitizes input data from XSS Attack
+        if($this->sanitizer->xss($this->post()) !== TRUE){
             $this->response([
-                'status' => $val['status'],
-                'token' => $td,
-                'message' => $val['e']
-            ], 200);      
+                'status' => false,
+                'token' => $this->t,
+                'message' => 'Error Handling Data'
+            ], 404);            
         }
 
-        $this->form_validation->set_data($this->post());
+        //Validates input data using specific rules
         $this->form_validation->reset_validation();
-
+        $this->form_validation->set_data($this->post());
         if($this->form_validation->run('admin_add') == FALSE){
             $this->response([
                 'status' => FALSE,
-                'token' =>  $td,
+                'token' =>  $this->t,
                 'message' => $this->form_validation->error_array()
             ], 200);    
         }
@@ -146,83 +107,46 @@ class Admin extends RestController {
         if($i == 0){
             $this->response([
                 'status' => FALSE,
-                'token' => $td,
+                'token' => $this->t,
                 'message' => 'Something Went Wrong'
             ], 200);      
         }
 
         $this->response([
             'status' => TRUE,
-            'token' => $td,
+            'token' => $this->t,
             'message' => 'Admin Successfully Added'
         ], 200);    
     }
 
     public function index_delete(){
-        /**
-         * CHECKING TOKEN
-         */
-        $token = $this->token->validate();
 
-        if($token['status'] != TRUE){
-            $this->response([
-                'status' => $token['status'],
-                'message' => $token['e']
-            ], 200);
-        }  
-        
-        $type = $token['token']['data']->type;
-        $id = $token['token']['data']->id;
-        $user = $token['token']['data']->user;
-        $td = $this->token->generate($this->aud, $token['token']['data']);
-
-        /**
-         * SANITIZING INPUT OF POST DATA FOR XSS ATTACK
-         */
-        if($this->sanitizer->xss($this->delete()) !== TRUE){
-            $this->response([
-                'status' => false,
-                'token' => $td,
-                'message' => 'Error Handling Data'
-            ], 404);            
-        }
-
-        $val = $this->validation->method_one($id, $user, $type);
-
-        if($val['status'] == FALSE){
-            $this->response([
-                'status' => $val['status'],
-                'token' => $td,
-                'message' => $val['e']
-            ], 200);      
-        }
-
-        if($type != 'admin'){
+        //Only admin can use this function
+        if($this->type != 'admin'){
             $this->response([
                 'status' => FALSE,
-                'token' => $td,
                 'message' => 'Unauthorized User Type'
             ], 401); 
         }
 
-        $data = $this->delete('id');
+        //Sanitizes input data to avoid XSS Attack
+        if($this->sanitizer->xss($this->delete()) !== TRUE){
+            $this->response([
+                'status' => false,
+                'token' => $this->t,
+                'message' => 'Error Handling Data'
+            ], 404);            
+        }
 
+        //Validates input data using specific rules
+        $this->form_validation->reset_validation();
         $this->form_validation->set_data($this->delete());
-
         if($this->form_validation->run('id') == FALSE){
             $this->response([
                 'status' => FALSE,
-                'token' => $td,
+                'token' => $this->t,
                 'message' => $this->form_validation->error_array()
             ], 200);  
-        }
-
-        if($type != 'admin'){
-            $this->response([
-                'status' => FALSE,
-                'token' => $td,
-                'message' => 'Unauthorized User Type'
-            ], 401);      
         }
 
         $i = $this->madmin->delete($this->delete('id'));
@@ -230,96 +154,81 @@ class Admin extends RestController {
         if($i == 0){
             $this->response([
                 'status' => FALSE,
-                'token' => $td,
+                'token' => $this->t,
                 'message' => 'Something Went Wrong'
             ], 200);      
         }
 
         $this->response([
             'status' => TRUE,
-            'token' => $td,
+            'token' => $this->t,
             'message' => 'Account Successfully Deleted'
         ], 200);    
 
     }
 
-    private function index_update(){
-        /**
-         * CHECKING TOKEN
-         */
-        $token = $this->token->validate();
+    // private function index_put(){
+    //     //Validates token if valid JWT Token
+    //     $token = $this->token->validate();
 
-        if($token['status'] != TRUE){
-            $this->response([
-                'status' => $token['status'],
-                'message' => $token['e']
-            ], 200);
-        }  
+    //     if($token['status'] != TRUE){
+    //         $this->response([
+    //             'status' => $token['status'],
+    //             'message' => $token['e']
+    //         ], 200);
+    //     }  
         
-        $type = $token['token']['data']->type;
-        $id = $token['token']['data']->id;
-        $user = $token['token']['data']->user;
-        $td = $this->token->generate($this->aud, $token['token']['data']);
+    //     $type = $token['token']['data']->type;
+    //     $id = $token['token']['data']->id;
+    //     $user = $token['token']['data']->user;
 
-        /**
-         * SANITIZING INPUT OF POST DATA FOR XSS ATTACK
-         */
-        if($this->sanitizer->xss($this->update()) !== TRUE){
-            $this->response([
-                'status' => false,
-                'token' => $td,
-                'message' => 'Error Handling Data'
-            ], 404);            
-        }
+    //     //Generates JWT Token
+    //     $td = $this->token->generate($this->aud, $token['token']['data']);
 
-        $val = $this->validation->method_one($id, $user, $type);
+    //     //Sanitizes input data to avoid XSS Attack
+    //     if($this->sanitizer->xss($this->put()) !== TRUE){
+    //         $this->response([
+    //             'status' => false,
+    //             'token' => $td,
+    //             'message' => 'Error Handling Data'
+    //         ], 404);            
+    //     }
 
-        if($val['status'] == FALSE){
-            $this->response([
-                'status' => $val['status'],
-                'token' => $td,
-                'message' => $val['e']
-            ], 200);      
-        }
+    //     //Only admin can use this function
+    //     if($type != 'admin'){
+    //         $this->response([
+    //             'status' => FALSE,
+    //             'message' => 'Unauthorized User Type'
+    //         ], 401); 
+    //     }
 
-        if($type != 'admin'){
-            $this->response([
-                'status' => FALSE,
-                'token' => $td,
-                'message' => 'Unauthorized User Type'
-            ], 401); 
-        }
+    //     //Validates input data using specific rules
+    //     $this->form_validation->reset_validation();
+    //     $this->form_validation->set_data($this->put());
+    //     if($this->form_validation->run('course_update') == FALSE){
+    //         $this->response([
+    //             'status' => FALSE,
+    //             'token' => $td,
+    //             'message' => $this->form_validation->error_array()
+    //         ], 200);  
+    //     }
 
-        $data = $this->update();
-        $data_id = $this->get('id');
+    //     $i = $this->madmin->update($data_id, $data);
 
-        $this->form_validation->set_data($data);
-        $this->form_validation->set_data(['course_id' => $data_id]);
+    //     if($i == 0){
+    //         $this->response([
+    //             'status' => FALSE,
+    //             'token' => $td,
+    //             'message' => 'Something Went Wrong'
+    //         ], 200);      
+    //     }
 
-        if($this->form_validation->run('course_update') == FALSE){
-            $this->response([
-                'status' => FALSE,
-                'token' => $td,
-                'message' => $this->form_validation->error_array()
-            ], 200);  
-        }
+    //     $this->response([
+    //         'status' => TRUE,
+    //         'token' => $td,
+    //         'message' => 'Report Updated Successfully'
+    //     ], 200);    
 
-        $i = $this->madmin->update( $data_id, $data);
-
-        if($i == 0){
-            $this->response([
-                'status' => FALSE,
-                'token' => $td,
-                'message' => 'Something Went Wrong'
-            ], 200);      
-        }
-
-        $this->response([
-            'status' => TRUE,
-            'token' => $td,
-            'message' => 'Report Updated Successfully'
-        ], 200);    
-
-    }
+    // }
 
 }
